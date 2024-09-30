@@ -29,7 +29,7 @@ export class TokenService {
 
   public login(token: string) {
     this.setToken(token);
-    this.router.navigate(["/"]);
+    this.router.navigate(["/agendas"]);
   }
 
   public logout() {

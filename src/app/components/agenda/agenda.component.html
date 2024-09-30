@@ -1,0 +1,68 @@
+<div class="bg-slate-100">
+  <nav class="flex-start bg-cyan-500 py-2">
+    <a routerLink="/agendas" class="hover:underline ml-24 text-xl px-8 py-2 bg-white cursor-pointer">Agendas</a>
+    <a routerLink="#" class="hover:underline ml-12 text-xl">Historias Clínicas</a>
+  </nav>
+
+  <div class="flex justify-between mt-10 px-24">
+    <p class="text-cyan-900 text-3xl">Agenda</p>
+
+    <!-- Schedule appointment button -->
+    <button class="bg-teal-600 text-white px-8 rounded-md">
+      Agendar Cita
+    </button>
+  </div>
+
+  <div class="flex space-x-6 items-center mb-4 py-4 px-16 mt-6">
+    <!-- Filters for Especialidad and Médico -->
+    <div class="flex space-x-2">
+      <button
+        class="btn-filter"
+        [ngClass]="{
+          'bg-cyan-400 text-white': selectedFilter === 'Especialidad'
+        }"
+        (click)="selectFilter('Especialidad')"
+      >
+        <span *ngIf="selectedFilter === 'Especialidad'">✔️</span>
+        <span class="text-cyan-900">Especialidad</span>
+      </button>
+      <button
+        class="btn-filter"
+        [ngClass]="{ 'bg-cyan-400 text-white': selectedFilter === 'Médico' }"
+        (click)="selectFilter('Médico')"
+      >
+        <span *ngIf="selectedFilter === 'Médico'">✔️</span>
+        <span class="text-cyan-900">Médico</span>
+      </button>
+    </div>
+
+    <!-- Search bar -->
+    <div class="flex space-x-2 items-center w-full">
+      <input
+        type="text"
+        class="border border-gray-500 rounded-xl w-[250px] md:w-[300px] lg:w-[500px]"
+        placeholder=" Buscar ... "
+        [(ngModel)]="searchQuery"
+      />
+      <input
+        type="date"
+        class="border border-gray-500 rounded-xl w-[100px] md:w-[150px] lg:w-[200px]"
+        [(ngModel)]="selectedDate"
+      />
+    </div>
+  </div>
+
+
+  <!-- No Results Placeholder -->
+  <div *ngIf="!appointments.length" class="flex flex-col justify-center items-center py-6">
+    <img src="./img/no-results.JPG" alt="No Results" class="w-80 h-72 rounded-xl border border-slate-200 shadow-xl mb-12" />
+    <p class="text-gray-500">No hay agendas abiertas</p>
+  </div>
+
+
+  <!-- Display results in case appointments exist -->
+  <app-lista-citas
+    *ngIf="appointments.length"
+    [appointments]="appointments"
+  ></app-lista-citas>
+</div>

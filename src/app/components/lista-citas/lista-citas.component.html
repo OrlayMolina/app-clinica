@@ -1,0 +1,36 @@
+<div class="p-4">
+  <div class="flex justify-between items-center mb-4">
+    <h3 class="text-xl font-semibold">Citas de {{doctorName}}</h3>
+  </div>
+
+  <table class="w-full table-auto border-collapse">
+    <thead>
+      <tr>
+        <th class="px-4 py-2">Hora</th>
+        <th class="px-4 py-2">Estado</th>
+        <th class="px-4 py-2">Paciente</th>
+        <th class="px-4 py-2">Identificación</th>
+        <th class="px-4 py-2">Especialidad</th>
+        <th class="px-4 py-2">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let appointment of appointments" class="hover:bg-gray-100">
+        <td class="px-4 py-2">{{appointment.time}}</td>
+        <td class="px-4 py-2">
+          <span [ngClass]="{'text-red-500': appointment.state === 'Bloqueo', 'text-green-500': appointment.state === 'Pendiente'}">
+            {{appointment.state}}
+          </span>
+        </td>
+        <td class="px-4 py-2">{{appointment.patient}}</td>
+        <td class="px-4 py-2">{{appointment.id}}</td>
+        <td class="px-4 py-2">{{appointment.specialty}}</td>
+        <td class="px-4 py-2">
+          <button class="text-red-500 hover:text-red-700" (click)="openModal(appointment)">
+            ❗
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
