@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
 export class ListaCitasComponent {
 
   @Input() appointments: any[] = [];
-  @Input() doctorName: string = '';  // Definir la propiedad doctorName
+  @Input() doctorName: string = '';
 
   isModalOpen: boolean = false;
   selectedAppointment: any;

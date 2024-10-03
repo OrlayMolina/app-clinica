@@ -21,15 +21,11 @@ export class TokenService {
   }
 
   public isLogged(): boolean {
-    if (this.getToken()) {
-    return true;
-    }
-    return false;
+    return !!this.getToken();
   }
 
   public login(token: string) {
     this.setToken(token);
-    this.router.navigate(["/agendas"]);
   }
 
   public logout() {
@@ -37,9 +33,9 @@ export class TokenService {
     this.router.navigate(["/login"]);
   }
 
-  private decodePayload(token: string): any {
-    const payload = token!.split(".")[1];
-    const payloadDecoded = Buffer.from(payload, 'base64').toString('ascii');
+  public decodePayload(token: string): any {
+    const payload = token.split(".")[1];
+    const payloadDecoded = Buffer.from(payload, 'base64').toString('utf-8');
     const values = JSON.parse(payloadDecoded);
     return values;
   }
