@@ -11,5 +11,5 @@ export class PublicoService {
   private publicoURL = "http://localhost:8080/api";
 
   constructor(private http: HttpClient) { }
-
+  
 }

@@ -5,6 +5,7 @@ import { InformacionAgendaDTO } from '../dto/informacion-agenda-dto';
 import { MensajeDTO } from '../dto/mensaje-dto';
 import { LoginDTO } from '../dto/login-dto';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { CambiarPasswordDTO } from '../dto/cambiar-password-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +32,14 @@ export class AuthService {
 
   public obtenerInformacionAgenda(especialidad: string): Observable<MensajeDTO> {
     return this.http.post<MensajeDTO>(`${this.authURL}/obtener-agendas-especialidad`, especialidad);
+  }
+
+  public enviarCodigo(correo: string) : Observable<MensajeDTO> {
+    return this.http.post<MensajeDTO>(`${this.authURL}/enviar-codigo-password`, correo);
+  }
+
+  public cambiarPassword(datos: CambiarPasswordDTO) : Observable<MensajeDTO> {
+    return this.http.post<MensajeDTO>(`${this.authURL}/cambiar-password`, datos);
   }
 
   setUser(user: {nombre: string, apellido: string}) {

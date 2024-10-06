@@ -1,0 +1,26 @@
+<div class="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+    <h2 class="text-2xl font-semibold text-cyan-800 mb-4">Actualiza tu contraseña</h2>
+  
+    <div class="flex flex-col space-y-4">
+      <div class="flex flex-col">
+  
+        <label for="email" class="text-cyan-800">Correo Electrónico</label>
+        <input
+          id="email"
+          type="email"
+          [(ngModel)]="email"
+          placeholder="Email"
+          class="p-0.5 border border-cyan-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-600"
+        />
+  
+      <button
+        (click)="onActualizar(email)"
+        class="mt-4 px-6 py-1 text-white bg-cyan-800 hover:bg-cyan-600 rounded-xl"
+      >
+        enviar Código
+      </button>
+      <!-- Componente de alerta -->
+      <app-alerta [alerta]="alerta"></app-alerta>
+    </div>
+  </div>
+  

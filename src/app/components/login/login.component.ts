@@ -1,9 +1,11 @@
+import { provideHttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
 import { LoginDTO } from '../../dto/login-dto';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { PublicoService } from '../../services/publico.service';
 import { TokenService } from '../../services/token.service';
 import { AlertaComponent } from '../alerta/alerta.component';
 import { Alerta } from '../../dto/alerta';
@@ -21,6 +23,7 @@ export class LoginComponent {
 
   constructor(
     private authService: AuthService,
+    private publicService: PublicoService,
     private tokenService: TokenService,
     private router: Router
   ) {
