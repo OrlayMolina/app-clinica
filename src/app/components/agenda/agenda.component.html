@@ -7,20 +7,16 @@
   <div class="flex justify-between mt-10 px-24">
     <p class="text-cyan-900 text-3xl">Agenda</p>
 
-    <!-- Schedule appointment button -->
     <button class="bg-cyan-800 text-white px-8 rounded-md">
       Agendar Cita
     </button>
   </div>
 
   <div class="flex space-x-6 items-center mb-4 py-4 px-16 mt-6">
-    <!-- Filters for Especialidad and Médico -->
     <div class="flex space-x-2">
       <button
         class="btn-filter"
-        [ngClass]="{
-          'bg-cyan-400 text-white': selectedFilter === 'Especialidad'
-        }"
+        [ngClass]="{ 'bg-cyan-400 text-white': selectedFilter === 'Especialidad' }"
         (click)="selectFilter('Especialidad')"
       >
         <span *ngIf="selectedFilter === 'Especialidad'">✔️</span>
@@ -36,7 +32,6 @@
       </button>
     </div>
 
-    <!-- Search bar -->
     <div class="flex space-x-2 items-center w-full">
       <input
         type="text"
@@ -49,20 +44,19 @@
         class="border border-gray-500 rounded-xl w-[100px] md:w-[150px] lg:w-[200px]"
         [(ngModel)]="selectedDate"
       />
+      <button class="bg-cyan-800 text-white px-4 py-2 rounded-md" (click)="filterAppointments()">
+        Buscar
+      </button>
+      <!-- Componente de alerta -->
+      <app-alerta [alerta]="alerta"></app-alerta>
     </div>
   </div>
 
-
-  <!-- No Results Placeholder -->
   <div *ngIf="!appointments.length" class="flex flex-col justify-center items-center py-6">
     <img src="./img/no-results.JPG" alt="No Results" class="w-80 h-72 rounded-xl border border-slate-200 shadow-xl mb-12" />
     <p class="text-gray-500">No hay agendas abiertas</p>
   </div>
 
-
-  <!-- Display results in case appointments exist -->
-  <app-lista-citas
-    *ngIf="appointments.length"
-    [appointments]="appointments"
-  ></app-lista-citas>
+  <!-- Pasar las citas al componente ListaCitas -->
+  <app-lista-citas *ngIf="appointments.length" [appointments]="appointments"></app-lista-citas>
 </div>

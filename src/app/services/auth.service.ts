@@ -29,12 +29,14 @@ export class AuthService {
     return this.http.post<MensajeDTO>(`${this.authURL}/login`, loginDTO);
   }
 
-  // Este método se llamaría después de un login exitoso
+  public obtenerInformacionAgenda(especialidad: string): Observable<MensajeDTO> {
+    return this.http.post<MensajeDTO>(`${this.authURL}/obtener-agendas-especialidad`, especialidad);
+  }
+
   setUser(user: {nombre: string, apellido: string}) {
     this.userSubject.next(user);
   }
 
-  // Método para cerrar sesión
   logout() {
     this.userSubject.next(null);
   }

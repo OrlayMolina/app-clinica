@@ -11,17 +11,17 @@ import { CommonModule } from '@angular/common';
 export class ListaCitasComponent {
 
   @Input() appointments: any[] = [];
-  @Input() doctorName: string = '';
-
-  isModalOpen: boolean = false;
-  selectedAppointment: any;
+  showModal: boolean = false;
+  selectedAppointment: any = null;
 
   openModal(appointment: any) {
     this.selectedAppointment = appointment;
-    this.isModalOpen = true;
+    this.showModal = true;
   }
 
   closeModal() {
-    this.isModalOpen = false;
+    this.showModal = false;
+    this.selectedAppointment = null;
   }
+
 }

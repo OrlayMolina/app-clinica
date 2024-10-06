@@ -30,17 +30,14 @@ export class LoginComponent {
   public logearse() {
     this.authService.loginCliente(this.loginDTO).subscribe({
       next: (data) => {
-        // Guardar el token en el TokenService
         this.tokenService.login(data.respuesta.token);
 
-        // Extraer el nombre y apellido del token
         const decodedToken = this.tokenService.decodePayload(data.respuesta.token);
         const usuario = {
-          nombre: decodedToken.nombre,  // Asegúrate de que el token tenga estos campos
+          nombre: decodedToken.nombre,
           apellido: decodedToken.apellido
         };
 
-        // Establecer el usuario logueado en el AuthService
         this.authService.setUser(usuario);
 
         setTimeout(() => {

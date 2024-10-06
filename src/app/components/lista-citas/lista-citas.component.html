@@ -1,8 +1,4 @@
 <div class="p-4">
-  <div class="flex justify-between items-center mb-4">
-    <h3 class="text-xl font-semibold">Citas de {{doctorName}}</h3>
-  </div>
-
   <table class="w-full table-auto border-collapse">
     <thead>
       <tr>
@@ -15,20 +11,56 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let appointment of appointments" class="hover:bg-gray-100">
-        <td class="px-4 py-2">{{appointment.time}}</td>
+      <tr *ngFor="let cita of appointments" class="hover:bg-gray-100">
+        <td class="px-4 py-2">{{ cita.horaCita }}</td>
         <td class="px-4 py-2">
-          <span [ngClass]="{'text-red-500': appointment.state === 'Bloqueo', 'text-green-500': appointment.state === 'Pendiente'}">
-            {{appointment.state}}
+          <span
+            [ngClass]="{
+              'text-green-500': cita.estado === 'Confirmada',
+              'text-red-500': cita.estado !== 'Confirmada'
+            }"
+          >
+            {{ cita.estado }}
           </span>
         </td>
-        <td class="px-4 py-2">{{appointment.patient}}</td>
-        <td class="px-4 py-2">{{appointment.id}}</td>
-        <td class="px-4 py-2">{{appointment.specialty}}</td>
+        <td class="px-4 py-2">{{ cita.paciente }}</td>
+        <td class="px-4 py-2">{{ cita.nroDocumento }}</td>
+        <td class="px-4 py-2">{{ cita.especialidad }}</td>
         <td class="px-4 py-2">
-          <button class="text-red-500 hover:text-red-700" (click)="openModal(appointment)">
+          <button
+            class="text-red-500 hover:text-red-700"
+            (click)="openModal(cita)"
+          >
             ❗
           </button>
+
+          <!-- Modal -->
+          <div
+            *ngIf="showModal"
+            class="modal fixed z-50 inset-0 overflow-y-auto"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Detalles de la Cita Médica</h5>
+                  <button (click)="closeModal()" class="close">&times;</button>
+                </div>
+                <div class="modal-body">
+                  <p>
+                    <strong>Paciente:</strong>
+                    {{ selectedAppointment?.paciente }}
+                  </p>
+                  <p>
+                    <strong>Fecha:</strong> {{ selectedAppointment?.fechaCita }}
+                  </p>
+                  <p>
+                    <strong>Especialidad:</strong>
+                    {{ selectedAppointment?.especialidad }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </td>
       </tr>
     </tbody>
