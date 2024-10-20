@@ -38,6 +38,18 @@ export class AuthService {
     return this.http.post<MensajeDTO>(`${this.authURL}/cambiar-password`, datos);
   }
 
+  public obtenerInformacionAgenda(nombreEspecialidad: string): Observable<MensajeDTO> {
+    return this.http.post<MensajeDTO>(`${this.authURL}/obtener-agendas-especialidad`, nombreEspecialidad);
+  }
+
+  public obtenerInformacionAgendaPorProfesional(nombreProfesional: string): Observable<MensajeDTO> {
+    return this.http.post<MensajeDTO>(`${this.authURL}/obtener-agendas-profesional`, nombreProfesional);
+  }
+
+  public crearCita(cita: CrearCitaDTO) : Observable<MensajeDTO>{
+    return this.http.post<MensajeDTO>(`${this.authURL}/citas/crear-cita`, cita);
+  }
+
   public sedes(): Observable<MensajeDTO> {
     return this.http.get<MensajeDTO>(`${this.authURL}/sedes/lista-sedes`);
   }

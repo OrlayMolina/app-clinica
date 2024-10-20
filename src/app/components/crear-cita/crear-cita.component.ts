@@ -6,7 +6,6 @@ import { Alerta } from '../../dto/alerta';
 import { AlertaComponent } from '../alerta/alerta.component';
 import { SedeDTO } from '../../dto/sede-dto';
 import { AuthService } from '../../services/auth.service';
-import { CuentaService } from '../../services/cuenta.service';
 import { CrearCitaDTO } from '../../dto/crear-cita-dto';
 import { EspecialidadDTO } from '../../dto/especialidad-dto';
 import { PacienteDTO } from '../../dto/paciente-dto';
@@ -30,7 +29,7 @@ export class CrearCitaComponent {
   consultorios: string[];
   alerta: Alerta | null = null;
 
-  constructor(private authService: AuthService, private cuentaService: CuentaService, private router: Router, private tokenService: TokenService) {
+  constructor(private authService: AuthService, private router: Router, private tokenService: TokenService) {
     this.crearCitaDTO = new CrearCitaDTO();
     this.sedes = [];
     this.pacientes = [];
@@ -99,7 +98,7 @@ export class CrearCitaComponent {
     this.crearCitaDTO.fechaCreacion = fechaCreacion;
     this.crearCitaDTO.usuarioCreacion = usuarioRegistro;
 
-    this.cuentaService.crearCita(this.crearCitaDTO).subscribe({
+    this.authService.crearCita(this.crearCitaDTO).subscribe({
       next: (data) => {
         this.alerta = new Alerta(data.respuesta, 'success');
         console.log(this.crearCitaDTO);

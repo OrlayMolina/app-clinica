@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ListaCitasComponent } from '../lista-citas/lista-citas.component';
 import { RouterModule } from '@angular/router';
 import { AlertaComponent } from '../alerta/alerta.component';
-import { CuentaService } from '../../services/cuenta.service';
+import { AuthService } from '../../services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { Alerta } from '../../dto/alerta';
 
@@ -22,12 +22,12 @@ export class AgendaComponent {
   appointments: any[] = [];
   alerta: Alerta | null = null;
 
-  constructor(private cuentaService: CuentaService) {
+  constructor(private authService: AuthService) {
     this.appointments = [];
   }
 
   obtenerAgendaPorEspecialidad(especialidad: string) {
-    this.cuentaService.obtenerInformacionAgenda(especialidad).subscribe({
+    this.authService.obtenerInformacionAgenda(especialidad).subscribe({
       next: (data) => {
         if (data.respuesta) {
           this.appointments = data.respuesta.informacionCitaDTO;
@@ -43,7 +43,7 @@ export class AgendaComponent {
   }
 
   obtenerAgendaPorProfesional(profesional: string) {
-    this.cuentaService.obtenerInformacionAgendaPorProfesional(profesional).subscribe({
+    this.authService.obtenerInformacionAgendaPorProfesional(profesional).subscribe({
       next: (data) => {
         if (data.respuesta) {
           this.appointments = data.respuesta.informacionCitaDTO;
