@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { RegistroPacienteDTO } from '../../dto/registro-paciente-dto';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
@@ -26,7 +26,7 @@ export class RegistroComponent {
   tiposDocumento: string[];
   alerta!:Alerta;
 
-  constructor(private publicoService: PublicoService, private authService: AuthService) {
+  constructor(private publicoService: PublicoService, private authService: AuthService, private router: Router) {
     this.registroPacienteDTO = new RegistroPacienteDTO();
     this.ciudades = [];
     this.departamentos = [];
@@ -67,14 +67,23 @@ export class RegistroComponent {
   }
 
   public registrar() {
-    this.authService.registrarCliente(this.registroPacienteDTO).subscribe({
-      next: (data) => {
-      this.alerta = new Alerta(data.respuesta, "success");
-      },
-      error: (error) => {
-      this.alerta = new Alerta(error.error.respuesta, "danger");
-      }
-    });
+    if (this.sonIguales()) {
+      this.authService.registrarPaciente(this.registroPacienteDTO).subscribe({
+        next: (data) => {
+          this.alerta = new Alerta(data.respuesta, "success");
+
+          setTimeout(() => {
+            this.router.navigate(['/activar-cuenta']);
+          }, 1500);
+        },
+        error: (error) => {
+
+          this.alerta = new Alerta(error.error.respuesta, "danger");
+        }
+      });
+    } else {
+      this.alerta = new Alerta("Las contraseñas no coinciden", "danger");
+    }
   }
 
   public sonIguales(): boolean {

@@ -1,0 +1,161 @@
+<div class="bg-gray-200 flex justify-center items-start min-h-screen">
+  <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-md my-12">
+    <h2 class="text-2xl font-semibold mb-4 text-center">Crear Cita Médica</h2>
+
+    <form #f="ngForm" (ngSubmit)="crearCita()" class="space-y-4">
+      <div class="grid grid-cols-2 gap-4">
+
+        <div>
+          <label for="idMedico" class="block text-sm font-medium text-gray-700">Médico</label>
+          <select
+            id="idMedico"
+            required
+            [(ngModel)]="crearCitaDTO.idMedico"
+            name="idMedico"
+            class="mt-1 block w-full rounded-md border border-slate-400 shadow-sm sm:text-sm"
+          >
+            <option value="" selected>Seleccione un Médico</option>
+            <!-- Usa ngFor para mostrar el nombre, pero selecciona el ID -->
+            <option *ngFor="let item of medicos" [value]="item.id">{{ item.nombres + ' ' + item.apellidos }}</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="idPaciente" class="block text-sm font-medium text-gray-700">Paciente</label>
+          <select
+            id="idPaciente"
+            required
+            [(ngModel)]="crearCitaDTO.idPaciente"
+            name="idPaciente"
+            class="mt-1 block w-full rounded-md border border-slate-400 shadow-sm sm:text-sm"
+          >
+            <option value="" selected>Seleccione un Paciente</option>
+            <option *ngFor="let item of pacientes" [value]="item.id">{{ item.nombres + ' ' + item.apellidos }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label for="idSede" class="block text-sm font-medium text-gray-700">Sede</label>
+          <select
+            id="idSede"
+            required
+            [(ngModel)]="crearCitaDTO.idSede"
+            name="idSede"
+            class="mt-1 block w-full rounded-md border border-slate-400 shadow-sm sm:text-sm"
+          >
+            <option value="" selected>Seleccione una sede</option>
+            <option *ngFor="let item of sedes" [value]="item.id">{{ item.nombre }}</option>
+          </select>
+        </div>
+        <div>
+          <label for="fechaCita" class="block text-sm font-medium text-gray-700">Fecha de la Cita</label>
+          <input
+            type="datetime-local"
+            id="fechaCita"
+            name="fechaCita"
+            required
+            [(ngModel)]="crearCitaDTO.fechaCita"
+            class="mt-1 block w-full rounded-md shadow-sm border border-slate-400 sm:text-sm"
+          >
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label for="especialidad" class="block text-sm font-medium text-gray-700">Especialidad</label>
+          <select
+            id="especialidad"
+            name="especialidad"
+            required
+            [(ngModel)]="crearCitaDTO.especialidad"
+            class="mt-1 block w-full rounded-md shadow-sm border border-slate-400 sm:text-sm"
+          >
+            <option value="" selected>Seleccione una especialidad</option>
+              <!-- Usar *ngFor correctamente -->
+            <option *ngFor="let item of especialidades" [value]="item.nombre">{{ item.nombre }}</option>
+          |</select>
+        </div>
+        <div>
+          <label for="duracion" class="block text-sm font-medium text-gray-700">Duración</label>
+          <input
+            type="text"
+            id="duracion"
+            name="duracion"
+            required
+            [(ngModel)]="crearCitaDTO.duracion"
+            class="mt-1 block w-full rounded-md shadow-sm border border-slate-400 sm:text-sm"
+          >
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label for="consultorio" class="block text-sm font-medium text-gray-700">Consultorio</label>
+          <select
+            id="consultorio"
+            name="consultorio"
+            required
+            [(ngModel)]="crearCitaDTO.consultorio"
+            class="mt-1 block w-full rounded-md shadow-sm border border-slate-400 sm:text-sm"
+          >
+            <option value="" selected>Seleccione un consultorio</option>
+            <!-- Usar *ngFor correctamente -->
+            <option *ngFor="let item of consultorios" [value]="item">{{ item }}</option>
+          </select>
+        </div>
+        <div>
+          <label for="comentarios" class="block text-sm font-medium text-gray-700">Comentarios</label>
+          <textarea
+            id="comentarios"
+            name="comentarios"
+            required
+            [(ngModel)]="crearCitaDTO.comentarios"
+            class="mt-1 block w-full rounded-md shadow-sm border border-slate-400 sm:text-sm"
+          ></textarea>
+        </div>
+      </div>
+
+      <div hidden>
+        <div>
+          <label for="usuarioCreacion" class="block text-sm font-medium text-gray-700">Usuario Creación</label>
+          <input
+            type="text"
+            id="usuarioCreacion"
+            name="usuarioCreacion"
+            required
+            [(ngModel)]="crearCitaDTO.usuarioCreacion"
+            class="mt-1 block w-full rounded-md shadow-sm border border-slate-400 sm:text-sm"
+          >
+        </div>
+        <div hidden>
+          <label for="fechaCreacion" class="block text-sm font-medium text-gray-700">Fecha Creación</label>
+          <input
+            type="text"
+            id="fechaCreacion"
+            name="fechaCreacion"
+            disabled
+            [(ngModel)]="crearCitaDTO.fechaCreacion"
+            class="mt-1 block w-full rounded-md shadow-sm border border-slate-400 sm:text-sm"
+          >
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <a
+          routerLink="/agendas"
+          class="w-full bg-red-800 text-center text-white py-2 px-4 rounded-md hover:bg-red-600 focus:ring-2 focus:ring-offset-2 focus:ring-red-800">
+          Cancelar
+        </a>
+        <button
+          type="submit"
+          class="w-full bg-cyan-800 text-white py-2 px-4 rounded-md hover:bg-cyan-600 focus:ring-2 focus:ring-offset-2 focus:ring-cyan-800">
+          Crear Cita
+        </button>
+      </div>
+
+      <app-alerta [alerta]="alerta"></app-alerta>
+    </form>
+  </div>
+</div>

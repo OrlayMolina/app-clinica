@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { RegistroPacienteDTO } from '../dto/registro-paciente-dto';
-import { InformacionAgendaDTO } from '../dto/informacion-agenda-dto';
 import { MensajeDTO } from '../dto/mensaje-dto';
 import { LoginDTO } from '../dto/login-dto';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { CambiarPasswordDTO } from '../dto/cambiar-password-dto';
+import { CrearCitaDTO } from '../dto/crear-cita-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +18,8 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  public registrarCliente(cliente: RegistroPacienteDTO): Observable<MensajeDTO> {
-    return this.http.post<MensajeDTO>(`${this.authURL}/crear-paciente`, cliente);
+  public registrarPaciente(paciente: RegistroPacienteDTO): Observable<MensajeDTO> {
+    return this.http.post<MensajeDTO>(`${this.authURL}/crear-paciente`, paciente);
   }
 
   public activarCuenta(email: string, codigo: string): Observable<MensajeDTO> {
@@ -30,16 +30,28 @@ export class AuthService {
     return this.http.post<MensajeDTO>(`${this.authURL}/login`, loginDTO);
   }
 
-  public obtenerInformacionAgenda(especialidad: string): Observable<MensajeDTO> {
-    return this.http.post<MensajeDTO>(`${this.authURL}/obtener-agendas-especialidad`, especialidad);
-  }
-
   public enviarCodigo(correo: string) : Observable<MensajeDTO> {
     return this.http.post<MensajeDTO>(`${this.authURL}/enviar-codigo-password`, correo);
   }
 
   public cambiarPassword(datos: CambiarPasswordDTO) : Observable<MensajeDTO> {
     return this.http.post<MensajeDTO>(`${this.authURL}/cambiar-password`, datos);
+  }
+
+  public sedes(): Observable<MensajeDTO> {
+    return this.http.get<MensajeDTO>(`${this.authURL}/sedes/lista-sedes`);
+  }
+
+  public pacientes(): Observable<MensajeDTO> {
+    return this.http.get<MensajeDTO>(`${this.authURL}/pacientes/lista-pacientes`);
+  }
+
+  public medicos(): Observable<MensajeDTO> {
+    return this.http.get<MensajeDTO>(`${this.authURL}/medicos/lista-medicos`);
+  }
+
+  public especialidades(): Observable<MensajeDTO> {
+    return this.http.get<MensajeDTO>(`${this.authURL}/especialidades/listar-todas`);
   }
 
   setUser(user: {nombre: string, apellido: string}) {

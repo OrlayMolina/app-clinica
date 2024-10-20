@@ -1,15 +1,16 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ListaCitasComponent } from '../lista-citas/lista-citas.component';
+import { RouterModule } from '@angular/router';
 import { AlertaComponent } from '../alerta/alerta.component';
-import { AuthService } from '../../services/auth.service';
+import { CuentaService } from '../../services/cuenta.service';
 import { FormsModule } from '@angular/forms';
 import { Alerta } from '../../dto/alerta';
 
 @Component({
   selector: 'app-agenda',
   standalone: true,
-  imports: [CommonModule, ListaCitasComponent, FormsModule, AlertaComponent],
+  imports: [CommonModule, ListaCitasComponent, FormsModule, AlertaComponent, RouterModule],
   templateUrl: './agenda.component.html',
   styleUrls: ['./agenda.component.css']
 })
@@ -19,14 +20,30 @@ export class AgendaComponent {
   searchQuery: string = '';
   selectedDate: string = '';
   appointments: any[] = [];
-  alerta!:Alerta;
+  alerta: Alerta | null = null;
 
-  constructor(private authService: AuthService) {
+  constructor(private cuentaService: CuentaService) {
     this.appointments = [];
   }
 
   obtenerAgendaPorEspecialidad(especialidad: string) {
-    this.authService.obtenerInformacionAgenda(especialidad).subscribe({
+    this.cuentaService.obtenerInformacionAgenda(especialidad).subscribe({
+      next: (data) => {
+        if (data.respuesta) {
+          this.appointments = data.respuesta.informacionCitaDTO;
+          console.log("Si hay citas")
+          console.log(this.appointments);
+        } else {
+          console.log('No hay citas disponibles.');
+        }
+      },
+      error: (error) =>
+        this.alerta = new Alerta(error.error.respuesta, 'danger')
+      });
+  }
+
+  obtenerAgendaPorProfesional(profesional: string) {
+    this.cuentaService.obtenerInformacionAgendaPorProfesional(profesional).subscribe({
       next: (data) => {
         if (data.respuesta) {
           this.appointments = data.respuesta.informacionCitaDTO;
@@ -46,9 +63,29 @@ export class AgendaComponent {
   }
 
   filterAppointments() {
+    const searchParam = this.searchQuery || '';
 
-    const filterParam = this.searchQuery || '';
+    if (this.selectedFilter === 'Especialidad') {
+      this.obtenerAgendaPorEspecialidad(searchParam);
 
-    this.obtenerAgendaPorEspecialidad(filterParam);
+      setTimeout(() => {
+        this.alerta = null;
+      }, 2000);
+
+    } else if (this.selectedFilter === 'Médico') {
+      this.obtenerAgendaPorProfesional(searchParam);
+
+      setTimeout(() => {
+        this.alerta = null;
+      }, 2000);
+
+    } else {
+      console.log('Por favor selecciona un filtro válido.');
+      this.alerta = new Alerta('Por favor selecciona un filtro válido.', 'danger');
+
+      setTimeout(() => {
+        this.alerta = null;
+      }, 2000);
+    }
   }
 }

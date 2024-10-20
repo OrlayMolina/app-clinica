@@ -47,15 +47,42 @@
                 </div>
                 <div class="modal-body">
                   <p>
+                    <strong>Tipo Documento:</strong>
+                    {{ selectedAppointment?.tipoDocumento }}
+                  </p>
+                  <p>
+                    <strong>Nro. Documento:</strong>
+                    {{ selectedAppointment?.nroDocumento }}
+                  </p>
+                  <p>
                     <strong>Paciente:</strong>
                     {{ selectedAppointment?.paciente }}
                   </p>
                   <p>
-                    <strong>Fecha:</strong> {{ selectedAppointment?.fechaCita }}
+                    <strong>Nro. Celular:</strong>
+                    {{ selectedAppointment?.celularPaciente }}
+                  </p>
+                  <p>
+                    <strong>Fecha de la Cita:</strong> {{ selectedAppointment?.fechaCita }}
+                  </p>
+                  <p>
+                    <strong>Hora de la Cita:</strong> {{ selectedAppointment?.horaCita }}
                   </p>
                   <p>
                     <strong>Especialidad:</strong>
                     {{ selectedAppointment?.especialidad }}
+                  </p>
+                  <p>
+                    <strong>Consultorio:</strong>
+                    {{ selectedAppointment?.consultorio }}
+                  </p>
+                  <p>
+                    <strong>Sede:</strong>
+                    {{ selectedAppointment?.sede }}
+                  </p>
+                  <p>
+                    <strong>Estado de la Cita:</strong>
+                    {{ selectedAppointment?.estado }}
                   </p>
                 </div>
               </div>
